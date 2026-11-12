@@ -1,0 +1,20 @@
+# Environment & Secrets
+.env
+.venv/
+venv/
+ENV/
+
+# Python Bytecode & Caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+
+# Transient Evaluation Outputs
+results/smoke_eval.json
+data/index/
