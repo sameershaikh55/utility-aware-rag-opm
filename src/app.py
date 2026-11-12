@@ -49,7 +49,7 @@ def main() -> None:
     # Sidebar: Asymmetric Utility Matrix & OPM Hyperparameters
     # -------------------------------------------------------------------------
     with st.sidebar:
-        st.header("🎛️ Decision Matrix & Gate")
+        st.header("Decision Matrix & Gate")
         st.markdown("Configure asymmetric utility payoffs $U(a, \\theta)$:")
 
         u_tp = st.slider(
@@ -85,7 +85,7 @@ def main() -> None:
         st.info(f"**Critical Decision Threshold ($p^*$):** `{p_star:.4f}`")
 
         st.divider()
-        st.subheader("🔬 Sampling & Retrieval")
+        st.subheader("Sampling & Retrieval")
         tau_ret = st.slider(
             "Retrieval Cosine Gate (τ_ret)",
             min_value=0.0,
@@ -109,7 +109,7 @@ def main() -> None:
         st.caption(f"**Execution Mode:** {mode_label}")
 
     tab_sandbox, tab_telemetry = st.tabs(
-        ["🧪 Live OPM Sandbox", "📊 Calibration & Benchmark Telemetry"]
+        ["Live OPM Sandbox", "Calibration & Benchmark Telemetry"]
     )
 
     # -------------------------------------------------------------------------
@@ -148,7 +148,7 @@ def main() -> None:
 
         selected_domain = None if domain_choice == "All Domains" else domain_choice
 
-        if st.button("🚀 Execute OPM Decision Engine", type="primary"):
+        if st.button("Execute OPM Decision Engine", type="primary"):
             engine = OPMEngine()
             with st.spinner(
                 "Running dense retrieval, Monte Carlo sampling, and MEU optimization..."
@@ -173,7 +173,7 @@ def main() -> None:
                 )
             else:
                 st.error(
-                    f"### 🛡️ OPTIMAL ACTION: ABSTAIN ($EU = {result.eu_abstain:+.2f} > {result.eu_accept:+.2f}$)\n"
+                    f"### OPTIMAL ACTION: ABSTAIN ($EU = {result.eu_abstain:+.2f} > {result.eu_accept:+.2f}$)\n"
                     f"**Fallback Intercept:** {ABSTAIN_FALLBACK_MESSAGE}\n\n"
                     f"*(Suppressed Candidate Answer: `{result.modal_answer}`)*"
                 )
@@ -187,7 +187,7 @@ def main() -> None:
             m5.metric("EU(Abstain | p)", f"{result.eu_abstain:+.2f}")
 
             # Retrieved Context Chunks
-            st.markdown("#### 📚 Top-k Retrieved Context Chunks ($C$)")
+            st.markdown("#### Top-k Retrieved Context Chunks ($C$)")
             gate_passed = result.top_similarity >= tau_ret
             st.caption(
                 f"Retrieval Gate $\\mathbb{{I}}(s_{{\\max}} \\ge \\tau_{{\\text{{ret}}}})$: "
@@ -199,7 +199,7 @@ def main() -> None:
 
             # Monte Carlo Samples Table
             st.markdown(
-                f"#### 🎲 Stochastic Monte Carlo Completions ($M = {len(result.samples)}$)"
+                f"#### Stochastic Monte Carlo Completions ($M = {len(result.samples)}$)"
             )
             sample_rows: List[Dict[str, Any]] = []
             for idx, s in enumerate(result.samples, start=1):
@@ -224,7 +224,7 @@ def main() -> None:
 
         col_btn1, col_btn2 = st.columns([1, 3])
         with col_btn1:
-            run_now = st.button("🔄 Run Full 18-Query Benchmark Now")
+            run_now = st.button("Run Full 18-Query Benchmark Now")
 
         if run_now:
             with st.spinner("Evaluating all 18 golden benchmark queries..."):
@@ -249,7 +249,7 @@ def main() -> None:
             k5.metric("Naive RAG Utility", f"{report.naive_total_utility:+.1f}")
             k6.metric("Net Utility Gain", f"{report.utility_gain:+.1f}")
 
-            st.markdown("#### 📐 5-Bin Confidence Calibration Breakdown")
+            st.markdown("#### 5-Bin Confidence Calibration Breakdown")
             bin_table = [
                 {
                     "Confidence Bin": b.bin_range,
@@ -294,7 +294,7 @@ def main() -> None:
                 )
 
             if report.query_details:
-                st.markdown("#### 🔍 Per-Query Benchmark Telemetry")
+                st.markdown("#### Per-Query Benchmark Telemetry")
                 st.dataframe(report.query_details, use_container_width=True)
 
 
